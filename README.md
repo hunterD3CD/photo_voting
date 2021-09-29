@@ -1,1 +1,1 @@
-# photo_voting
+# photo-voting
