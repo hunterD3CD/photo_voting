@@ -1,15 +1,10 @@
 import React from "react";
-import Button from '@mui/material/Button';
-import SaveIcon from '@mui/icons-material/Save';
+import ButtonAppBar from "./components/Navbar.js"
 
 function App() {
   return (
     <div className="App">
-      <Button 
-      startIcon={<SaveIcon/>} 
-      variant="contained">
-        Hello World
-      </Button>
+      <ButtonAppBar />
     </div>
   );
 }
@@ -17,3 +12,5 @@ function App() {
 
 
 export default App;
+
+
