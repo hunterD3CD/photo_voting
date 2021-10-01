@@ -1,7 +1,9 @@
+const { User, Vote } = require("../models");
+
 const resolvers = {
   Query: {
-    title: () => {
-      return "test";
+    votes: async () => {
+      return Vote.find().sort({ createdAt: -1 });
     },
   },
 };
