@@ -20,12 +20,21 @@ const userSchema = new Schema(
       required: true,
       minlength: 8,
     },
+
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
+
     votes: [
       {
         type: Schema.Types.ObjectId,
         ref: "Vote",
       },
     ],
+
     friends: [
       {
         type: Schema.Types.ObjectId,
