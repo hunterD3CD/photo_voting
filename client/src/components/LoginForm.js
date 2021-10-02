@@ -8,12 +8,12 @@ const LoginForm = () => {
   const paperStyle = {
     padding: 0,
     height: "60vh",
-    width: 300,
+    width: "250px",
     margin: 0,
   };
   // ---------------------------------------------------JSX---------------------------------------------------------
   return (
-    <Grid align="center">
+    <Grid lg={12} xs={12} item align="center">
       <Paper style={paperStyle}>
         <Avatar style={{ margin: "20px 0" }}>
           <VpnKeyTwoToneIcon />

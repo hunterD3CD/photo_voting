@@ -57,12 +57,11 @@ export default function ButtonAppBar(props) {
         aria-describedby="modal-modal-description"
       >
         <DialogContent>
-          <Grid container style={{ width: 300 }}>
-            {tabs.map((tab) => {
+          <Grid container >
+            {tabs.map((tab, index) => {
               return (
-                <Grid item>
+                <Grid item key={index}>
                   <Button
-                    key={tab}
                     onClick={() => setCurrentTab(tab)}
                     style={{ margin: 0 }}
                   >
