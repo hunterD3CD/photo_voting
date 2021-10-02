@@ -1,5 +1,4 @@
 import * as React from "react";
-// import {useState} from 'react';
 import SignUpForm from "./SignupForm";
 import LoginForm from "./LoginForm";
 
@@ -14,16 +13,6 @@ import ThumbsUpDownIcon from "@mui/icons-material/ThumbsUpDown";
 import Grid from "@mui/material/Grid";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-
-// style for the modal
-// const style = {
-//   position: "absolute",
-//   top: "50%",
-//   left: "50%",
-//   transform: "translate(-50%, -50%)",
-//   width: 400,
-//   backgroundColor: "white",
-// };
 
 export default function ButtonAppBar(props) {
   // set modal display state
@@ -68,7 +57,7 @@ export default function ButtonAppBar(props) {
         aria-describedby="modal-modal-description"
       >
         <DialogContent>
-          <Grid container style={{ width: "500px" }}>
+          <Grid container style={{ width: 300 }}>
             {tabs.map((tab) => {
               return (
                 <Grid item>

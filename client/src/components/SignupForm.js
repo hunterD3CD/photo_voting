@@ -1,11 +1,59 @@
 import React from "react";
 
-function SignupForm() {
+// ----------------------------------------------------MUI------------------------------------------------------
+import { Avatar, Button, Grid, Paper, TextField } from "@mui/material";
+import GroupAddTwoToneIcon from "@mui/icons-material/GroupAddTwoTone";
+
+const SignupForm = () => {
+  const paperStyle = {
+    padding: 0,
+    height: "60vh",
+    width: 300,
+    margin: 0,
+  };
+  // ---------------------------------------------------JSX---------------------------------------------------------
   return (
-    <div className="App">
-      SignupForm 
-    </div>
+    <Grid align="center">
+      <Paper style={paperStyle}>
+        <Avatar style={{ margin: "20px 0" }}>
+          <GroupAddTwoToneIcon />
+        </Avatar>
+        <TextField
+          required
+          fullWidth
+          id="Username"
+          label="Username"
+          variant="outlined"
+          style={{ margin: "5px 0" }}
+        />
+        <TextField
+          required
+          fullWidth
+          id="Email"
+          label="Email"
+          variant="outlined"
+          style={{ margin: "5px 0" }}
+        />
+        <TextField
+          required
+          fullWidth
+          id="Password"
+          label="Password"
+          variant="outlined"
+          style={{ margin: "5px 0" }}
+        />
+        <Button
+          type="submit"
+          color="primary"
+          variant="contained"
+          fullWidth
+          style={{ margin: "15px 0" }}
+        >
+          Sign up
+        </Button>
+      </Paper>
+    </Grid>
   );
-}
+};
 
 export default SignupForm;
