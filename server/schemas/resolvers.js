@@ -1,27 +1,28 @@
-const { User, Comment } = require("../models");
-const { AuthenticationError } = require('apollo-server-express');
-const { signToken } = require('../utils/auth');
+const { User, Photo } = require("../models");
+const {
+  AuthenticationError,
+  UserInputError,
+} = require("apollo-server-express");
+const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-
     me: async (parent, args, context) => {
-        if (context.user) {
-          const userData = await User.findOne({ _id: context.user._id })
-            .select('-__v -password')
-            .populate('comments')
-            .populate('friends');
-  
-          return userData;
-        }
-  
-        throw new AuthenticationError('Not logged in');
-    },
+      if (context.user) {
+        const userData = await User.findOne({ _id: context.user._id })
+          .select("-__v -password")
+          .populate("photos")
+          .populate("friends");
 
+        return userData;
+      }
+
+      throw new AuthenticationError("Not logged in");
+    },
     users: async () => {
       return User.find()
         .select("-__v -password")
-        .populate("comments")
+        .populate("photos")
         .populate("friends");
     },
 
@@ -29,20 +30,123 @@ const resolvers = {
       return User.findOne({ username })
         .select("-__v -password")
         .populate("friends")
-        .populate("comments");
+        .populate("photos");
     },
-    comments: async (parent, { username }) => {
+    photos: async (parent, { username }) => {
       const params = username ? { username } : {};
-      return Comment.find(params).sort({ createdAt: -1 });
+      return Photo.find(params).sort({ createdAt: -1 });
     },
-    Comment: async (parent, { _id }) => {
-      return Comment.findOne({ _id });
+    photo: async (parent, { _id }) => {
+      return Photo.findOne({ _id });
     },
+  },
 
+  Mutation: {
     addUser: async (parent, args) => {
       const user = await User.create(args);
+      const token = signToken(user);
 
-      return user;
+      return { token, user };
+    },
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw new AuthenticationError("Incorrect login info");
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError("Incorrect password");
+      }
+
+      const token = signToken(user);
+      return { token, user };
+    },
+
+    addPhoto: async (parent, args, context) => {
+      if (context.user) {
+        const photo = await Photo.create({
+          ...args,
+          username: context.user.username,
+        });
+
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { photos: photo._id } },
+          { new: true }
+        );
+
+        return photo;
+      }
+
+      throw new UserInputError("Invalid photo");
+    },
+
+    votePhoto: async (parent, { photoId }, context) => {
+      if (context.user) {
+        const likePhoto = await Photo.findById(photoId);
+
+        if (likePhoto) {
+          // find index of votes array that contains the user vote
+          const userIndex = likePhoto.votes.findIndex(
+            (like) => like.username === username
+          );
+          // check if we find the userIndex; > -1 means exists, == -1 dne
+          if (userIndex > -1) {
+            // if we find that user vote
+            const userVote = likePhoto.votes[userIndex].voteValue;
+            if (userVote === true) {
+              likePhoto.votes[userIndex].voteValue = false;
+            } else {
+              likePhoto.votes[userIndex].voteValue = true;
+            }
+          } else {
+            likePhoto.votes.push({ username, createdAt: new Date(timestamp) });
+          }
+          // if (likePhoto.votes.find() {
+          //   likePhoto = likePhoto.votes.filter(
+          //     (like) => votes.username !== username
+          //   );
+          // } else {
+          //   likePhoto.votes.push({ username, createdAt: new Date(timestamp) });
+          // }
+
+          await likePhoto.save();
+          return likePhoto;
+        } else throw new UserInputError("Invalid vote");
+      }
+    },
+
+    countVote: async (parent, { photoId }) => {
+      const photo = await Photo.findById(photoId);
+      let likes = 0,
+        dislikes = 0;
+      photo.votes.forEach((vote) => {
+        if (votes.voteValue === true) {
+          likes = likes + 1;
+          //likes += 1;
+          //likes ++;
+        } else {
+          dislikes++;
+        }
+      });
+      return { likes, dislikes };
+    },
+
+    addFriend: async (parent, { friendId }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { friends: friendId } },
+          { new: true }
+        ).populate("friends");
+
+        return updatedUser;
+      }
+
+      throw new AuthenticationError("You need to be logged in!");
     },
   },
 };
