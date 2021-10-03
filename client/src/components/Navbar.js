@@ -23,10 +23,12 @@ export default function ButtonAppBar(props) {
   const tabs = ["Login", "Signup"];
 
   const [currentTab, setCurrentTab] = React.useState("Login");
+
+  // ---------------------------------------------------JSX---------------------------------------------------------
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar position="static" style={{background: 'linear-gradient(45deg, #FE6B8B 30%, #9198e5 90%)'}}>
           <Toolbar>
             <IconButton
               size="large"

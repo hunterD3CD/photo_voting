@@ -1,23 +1,17 @@
 import React from "react";
 import {Parallax} from "react-parallax";
+import UploadPhoto from "../components/UploadPhoto"
 // ----------------------------------------------------MUI------------------------------------------------------
-import { makeStyles } from '@material-ui/core';
-import {Grid, Paper} from "@mui/material";
-
-const image1 =
-  "https://images.unsplash.com/photo-1498092651296-641e88c3b057?auto=format&fit=crop&w=1778&q=60&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D";
-const image2 =
-  "https://brightcove04pmdo-a.akamaihd.net/5104226627001/5104226627001_5297440765001_5280261645001-vs.jpg?pubId=5104226627001&videoId=5280261645001";
-const image3 =
-  "https://img00.deviantart.net/2bd0/i/2009/276/c/9/magic_forrest_wallpaper_by_goergen.jpg";
-const image4 =
-  "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/empire-state-building-black-and-white-square-format-john-farnan.jpg";
+// import { makeStyles } from '@material-ui/core';
+import {Grid} from "@mui/material";
+import coverImage from "../assets/img/landing-bg.jpg"
+import contactImage from "../assets/img/bg.jpg"
 
   const inlineStyle = {
-    background: '#fff',
-    left: '50%',
-    top: '50%',
-    position: 'absolute',
+    color: '#fff',
+    left: '60%',
+    top: '20%',
+    position: 'relative',
     padding: '20px',
     transform: 'translate(-50%, -50%)',
   }
@@ -27,26 +21,23 @@ const Home = () => {
   // ---------------------------------------------------JSX---------------------------------------------------------
   return (
     <>
-    <Parallax bgImage={ image1 } strength={500}>
-      <div style={{ height: 500 }}>
-          <div style={inlineStyle}>HTML inside the parallax</div>
-        </div>
+    {/* -----------------------------------------------PART 1------------------------------------------- */}
+    <Parallax bgImage={ coverImage } strength={500}>
+      <Grid Container>
+        <Grid Item xs={12} sm={12} md={6}>
+          <div style={{ height: 500 }}>
+              <h1 style={inlineStyle}>Vote your favorite photo and share!</h1>
+              <UploadPhoto />
+              <br />
+          </div>
+        </Grid>
+      </Grid>
     </Parallax>
      <h1>| | |</h1>
-     <Parallax bgImage={ image2 } blur={{ min: -1, max: 5 }}>
-       <div style={{ height: 500 }}>
-         <div style={inlineStyle}>Dinamic blur</div>
-       </div>
-     </Parallax>
-     <h1>| | |</h1>
-      <Parallax bgImage={ image3 } strength={-200} >
-        <div style={{ height: 500 }}>
-          <div style={inlineStyle}>Reverse direction</div>
-        </div>
-      </Parallax>
-      <h1>| | |</h1>
+
+    {/* -----------------------------------------------PART 2------------------------------------------- */}
       <Parallax 
-        bgImage={ image4 }
+        bgImage={ contactImage }
         strength={200}
         renderLayer={precentage => (
           <div 
