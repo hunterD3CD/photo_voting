@@ -22,9 +22,9 @@ const Home = () => {
   return (
     <>
     {/* -----------------------------------------------PART 1------------------------------------------- */}
-    <Parallax bgImage={ coverImage } strength={500}>
-      <Grid Container>
-        <Grid Item xs={12} sm={12} md={6}>
+    <Parallax bgImage={ coverImage } strength={700}>
+      <Grid container>
+        <Grid item xs={12} sm={12} md={6}>
           <div style={{ height: 500 }}>
               <h1 style={inlineStyle}>Vote your favorite photo and share!</h1>
               <UploadPhoto />
@@ -33,7 +33,7 @@ const Home = () => {
         </Grid>
       </Grid>
     </Parallax>
-     <h1>| | |</h1>
+    <h1>| | |</h1>
 
     {/* -----------------------------------------------PART 2------------------------------------------- */}
       <Parallax 
