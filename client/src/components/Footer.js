@@ -2,7 +2,7 @@ import * as React from "react";
 
 // ----------------------------------------------------MUI------------------------------------------------------
 import Typography from "@mui/material/Typography";
-import { Grid, Link } from "@mui/material";
+import { Grid } from "@mui/material";
 
 export default function Footer() {
   return (

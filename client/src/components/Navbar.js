@@ -1,20 +1,17 @@
 import * as React from "react";
+// import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignUpForm from "./SignupForm";
 import LoginForm from "./LoginForm";
+// import PhotoVote from "../pages/PhotoVote"
 
 // ----------------------------------------------------MUI------------------------------------------------------
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
+import {Grid, Box, AppBar, Toolbar, Typography, Button, IconButton, Dialog, DialogContent} from "@mui/material";
 import ThumbsUpDownIcon from "@mui/icons-material/ThumbsUpDown";
-import Grid from "@mui/material/Grid";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
+import VerticalSplitIcon from "@mui/icons-material/VerticalSplit";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import HomeIcon from "@mui/icons-material/Home";
 
-export default function ButtonAppBar(props) {
+const ButtonAppBar = (props) => {
   // set modal display state
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -28,7 +25,12 @@ export default function ButtonAppBar(props) {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" style={{background: 'linear-gradient(45deg, #FE6B8B 30%, #9198e5 90%)'}}>
+        <AppBar
+          position="static"
+          style={{
+            background: "linear-gradient(45deg, #FE6B8B 30%, #9198e5 90%)",
+          }}
+        >
           <Toolbar>
             <IconButton
               size="large"
@@ -42,8 +44,15 @@ export default function ButtonAppBar(props) {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Photo Voting
             </Typography>
+            {/* /////////////////////////////////////////////////////////////// */}
+            <HomeIcon />
+            <Button color="inherit">Home</Button>
+           
+            <VerticalSplitIcon />
+            <Button color="inherit">View Photo</Button>
             {/* ////////////////////////////////////////////////////////////////////////////////////////////////// */}
             {/* if user is logged in show logout, if not show login/signup */}
+            <ExitToAppIcon />
             <Button onClick={handleOpen} color="inherit">
               Login/Sign Up
             </Button>
@@ -59,7 +68,7 @@ export default function ButtonAppBar(props) {
         aria-describedby="modal-modal-description"
       >
         <DialogContent>
-          <Grid container >
+          <Grid container>
             {tabs.map((tab, index) => {
               return (
                 <Grid item key={index}>
@@ -86,3 +95,5 @@ export default function ButtonAppBar(props) {
     </>
   );
 }
+
+export default ButtonAppBar;
