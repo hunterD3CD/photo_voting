@@ -46,10 +46,10 @@ const ButtonAppBar = (props) => {
             </Typography>
             {/* /////////////////////////////////////////////////////////////// */}
             <HomeIcon />
-            <Button color="inherit">Home</Button>
+            <Button color="inherit" href="/">Home</Button>
            
             <VerticalSplitIcon />
-            <Button color="inherit">View Photo</Button>
+            <Button color="inherit" href="/photo">View Photo</Button>
             {/* ////////////////////////////////////////////////////////////////////////////////////////////////// */}
             {/* if user is logged in show logout, if not show login/signup */}
             <ExitToAppIcon />
