@@ -17,12 +17,15 @@ const typeDefs = gql`
     username: String
     voteCount: Int
     votes: [Vote]
+    likes: Int
+    dislikes: Int
   }
 
   type Vote {
     _id: ID
     createdAt: String
     username: String
+    voteValue: Boolean
   }
 
   type Auth {
