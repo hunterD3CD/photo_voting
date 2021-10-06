@@ -4,7 +4,7 @@ import UploadPhoto from "../components/UploadPhoto";
 import TeamSection from "../components/TeamSection";
 // ----------------------------------------------------MUI------------------------------------------------------
 // import { makeStyles } from '@material-ui/core';
-import { Grid} from "@mui/material";
+import { Grid } from "@mui/material";
 // import images
 import coverImage from "../assets/img/landing-bg.jpg";
 import contactImage from "../assets/img/bg.jpg";
