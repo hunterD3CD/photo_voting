@@ -1,58 +1,90 @@
 import React from "react";
+import Dropzone from "react-dropzone";
 
 // ----------------------------------------------------MUI------------------------------------------------------
-import { Button, Grid, TextField,Typography } from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import UploadRoundedIcon from "@mui/icons-material/UploadRounded";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 
-const UploadPhoto = () => {
-  const paperStyle = {
-    padding: 0,
-    height: "40vh",
-    width: "70%",
-    margin: 100,
-    background: "white",
-    borderRadius: 8,
-    boxShadow: '15px 15px 10px 1px rgba(255, 105, 135, .3)'
+class UploadPhoto extends React.Component {
+  state = {
+    users: [],
+    file: null,
+    name: null,
   };
 
-  const buttonStyle = {
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    border: 0,
-    borderRadius: 8,
-    boxShadow: '0 3px 20px 2px rgba(255, 105, 135, .3)',
-    color: 'white',
-    height: 48,
-    padding: '0 30px',
+  onDrop = async (files) => {
+    this.setState({ file: files[0] });
+  };
+
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
   };
 
   // ---------------------------------------------------JSX---------------------------------------------------------
-  return (
-    <Grid container spacing={2} style={paperStyle} justifyContent="center" alignItems="center">
-      <Typography xs={12} style={{ margin: '20px' }}>Hey! Wecomle to our website. Upload your nice photo below and share with your friends.</Typography>
-      <Grid item xs={2}>
-        <UploadRoundedIcon fontSize="large"/>
+  render() {
+    const paperStyle = {
+      padding: 0,
+      height: "40vh",
+      width: "70%",
+      margin: 100,
+      background: "white",
+      borderRadius: 8,
+      boxShadow: "15px 15px 10px 1px rgba(255, 105, 135, .3)",
+    };
+
+    const buttonStyle = {
+      background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+      border: 0,
+      borderRadius: 8,
+      boxShadow: "0 3px 20px 2px rgba(255, 105, 135, .3)",
+      color: "white",
+      height: 48,
+      padding: "0 30px",
+    };
+    return (
+      <Grid
+        container
+        spacing={2}
+        style={paperStyle}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Dropzone>
+          <p>
+            Try dropping some files here, or click to select files to upload.
+          </p>
+        </Dropzone>
+        <Typography xs={12} style={{ margin: "20px" }}>
+          Click here to upload a photo!
+        </Typography>
+        <Grid item xs={9}>
+          <TextField
+            required
+            fullWidth
+            id="Tag"
+            label="Tag your friends here"
+            variant="outlined"
+          />
+        </Grid>
+        <Grid item xs={9}>
+          <Button
+            onClick={this.submit}
+            style={buttonStyle}
+            type="submit"
+            color="primary"
+            variant="contained"
+            fullWidth
+          >
+            Upload
+          </Button>
+        </Grid>
+        <br />
       </Grid>
-      <Grid item xs={9}>
-        <Button style={buttonStyle} type="submit" color="primary" variant="contained" fullWidth>
-          Upload
-        </Button>
-      </Grid>
-      <Grid item xs={2}>
-        <SendRoundedIcon fontSize="large" />
-      </Grid>
-      <Grid item xs={9}>
-        <TextField
-           required
-           fullWidth
-           id="Tag"
-           label="Tag your friends here"
-           variant="outlined"
-        />
-      </Grid>
-      <br />
-    </Grid>
-  );
-};
+    );
+  }
+}
 
 export default UploadPhoto;
