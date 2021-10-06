@@ -1,20 +1,13 @@
 import React from "react";
 // ----------------------------------------------------MUI------------------------------------------------------
-import { Box, Typography, Rating, } from "@mui/material";
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { styled } from '@mui/material/styles';
+import { Box, Typography} from "@mui/material";
 
-const StyledRating = styled(Rating)({
-  '& .MuiRating-iconFilled': {
-    color: '#ff6d75',
-  },
-  '& .MuiRating-iconHover': {
-    color: '#ff3d47',
-  },
-});
 
-const RatingPhoto = () => {
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
+
+
+const RatingPhoto = (props) => {
   // ---------------------------------------------------JSX---------------------------------------------------------
   return (
     <Box
@@ -22,15 +15,11 @@ const RatingPhoto = () => {
         '& > legend': { mt: 2 },
       }}
     >
-      <Typography component="legend">Custom icon and color</Typography>
-      <StyledRating
-        name="customized-color"
-        defaultValue={2}
-        getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
-        precision={0.5}
-        icon={<FavoriteIcon fontSize="inherit" />}
-        emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-      />
+      <Typography component="legend">Vote photo</Typography>
+      <ThumbUpOffAltIcon />
+      {props.likes}
+      <ThumbDownAltIcon />
+      {props.dislikes}
     </Box>
   );
 };

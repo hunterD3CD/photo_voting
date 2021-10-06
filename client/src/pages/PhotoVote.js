@@ -1,5 +1,7 @@
 import React from "react";
 import RatingPhoto from "../components/RatingPhoto";
+// import { useQuery } from "@apollo/react-hooks";
+// import {QUERY_PHOTOS} from "../utils/queries"
 // ----------------------------------------------------MUI------------------------------------------------------
 // import { Grid} from "@mui/material";
 import ImageList from "@mui/material/ImageList";
@@ -8,16 +10,10 @@ import ImageListItemBar from "@mui/material/ImageListItemBar";
 
 // import { Box, Rating, Typography } from "@mui/material";
 
-// const inlineStyle = {
-//   color: "#fff",
-//   left: "60%",
-//   top: "10%",
-//   position: "relative",
-//   padding: "20px",
-//   transform: "translate(-50%, -50%)",
-// };
 
 const PhotoVote = () => {
+
+  
   // ---------------------------------------------------JSX---------------------------------------------------------
   return (
     <ImageList
@@ -40,7 +36,8 @@ const PhotoVote = () => {
             position="below"
           />
           {/* ----------------------------------- RATING COMPONENT----------------------------------------------- */}
-          <RatingPhoto />
+          <RatingPhoto likes={item.likes} dislikes={item.dislikes} />
+          <div>#: users </div>
         </ImageListItem>
       ))}
     </ImageList>
@@ -53,7 +50,9 @@ const itemData = [
   {
     img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
     title: "Breakfast",
-    author: "@bkristastucchio",
+    author: "@bkristastucchio", 
+    likes:"9",
+    dislikes: "5"
   },
   {
     img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
