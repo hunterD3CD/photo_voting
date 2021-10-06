@@ -42,7 +42,8 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
     addPhoto(photoId: ID!): Photo
-    addVote(photoId: ID!): Photo
+    votePhoto(photoId: ID!, voteValue: Boolean!): Photo
+    countVote(photoId: ID!): Photo
     addFriend(friendId: ID!): User
   }
 `;

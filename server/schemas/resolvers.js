@@ -83,8 +83,8 @@ const resolvers = {
 
       throw new UserInputError("Invalid photo");
     },
-
-    votePhoto: async (parent, { photoId }, context) => {
+    //adding voteValue
+    votePhoto: async (parent, { photoId, voteValue }, context) => {
       if (context.user) {
         const likePhoto = await Photo.findById(photoId);
 
@@ -103,7 +103,12 @@ const resolvers = {
               likePhoto.votes[userIndex].voteValue = true;
             }
           } else {
-            likePhoto.votes.push({ username, createdAt: new Date(timestamp) });
+            //adding votevalue to determine whether it's like or dislike
+            likePhoto.votes.push({
+              username,
+              voteValue,
+              createdAt: new Date(timestamp),
+            });
           }
           // if (likePhoto.votes.find() {
           //   likePhoto = likePhoto.votes.filter(
