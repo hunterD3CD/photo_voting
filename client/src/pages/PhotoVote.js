@@ -40,12 +40,12 @@ const PhotoVote = () => {
             />
             <ImageListItemBar
               title={item.title}
-              subtitle={<span>by: {item.author}</span>}
+              subtitle={<span>Vote by: {item.author}</span>}
               position="below"
             />
             {/* ----------------------------------- RATING COMPONENT----------------------------------------------- */}
             <RatingPhoto/>
-            <Typography variant="body2" color="text.secondary">Vote by: {photos[index].username} </Typography>
+            {/* <Typography variant="body2" color="text.secondary">Vote by: {photos[index].username} </Typography> */}
           </ImageListItem>
         ))}
 
