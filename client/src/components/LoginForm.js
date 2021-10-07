@@ -1,51 +1,98 @@
+// see SignupForm.js for comments
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
-// import { LOGIN_USER } from "../utils/mutations";
-// ----------------------------------------------------MUI------------------------------------------------------
-import { Avatar, Button, Grid, Paper, TextField } from "@mui/material";
-import VpnKeyTwoToneIcon from "@mui/icons-material/VpnKeyTwoTone";
+import { Form, Button, Alert } from "react-bootstrap";
+
+// import { loginUser } from '../utils/API';
+import { LOGIN_USER } from "../utils/mutations";
+import Auth from "../utils/auth";
 
 const LoginForm = () => {
-  const paperStyle = {
-    padding: 0,
-    height: "60vh",
-    width: "250px",
-    margin: 0,
+  const [userFormData, setUserFormData] = useState({ email: "", password: "" });
+  const [login, { error }] = useMutation(LOGIN_USER);
+  const [validated] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUserFormData({ ...userFormData, [name]: value });
   };
-  // ---------------------------------------------------JSX---------------------------------------------------------
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    // check if form has everything (as per react-bootstrap docs)
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    try {
+      const { data } = await login({
+        variables: { ...userFormData },
+      });
+      Auth.login(data.login.token);
+    } catch (err) {
+      console.error(error);
+      setShowAlert(true);
+    }
+
+    setUserFormData({
+      username: "",
+      email: "",
+      password: "",
+    });
+  };
+
   return (
-    <Grid lg={12} xs={12} item align="center">
-      <Paper style={paperStyle}>
-        <Avatar style={{ margin: "20px 0" }}>
-          <VpnKeyTwoToneIcon />
-        </Avatar>
-        <TextField
-          required
-          fullWidth
-          id="Username"
-          label="Username"
-          variant="outlined"
-          style={{ margin: "5px 0" }}
-        />
-        <TextField
-          required
-          fullWidth
-          id="Password"
-          label="Password"
-          variant="outlined"
-          style={{ margin: "5px 0" }}
-        />
-        <Button
-          type="submit"
-          color="primary"
-          variant="contained"
-          fullWidth
-          style={{ margin: "15px 0" }}
+    <>
+      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+        <Alert
+          dismissible
+          onClose={() => setShowAlert(false)}
+          show={showAlert}
+          variant="danger"
         >
-          Sign in
+          Something went wrong with your login credentials!
+        </Alert>
+        <Form.Group>
+          <Form.Label htmlFor="email">Email</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Your email"
+            name="email"
+            onChange={handleInputChange}
+            value={userFormData.email}
+            required
+          />
+          <Form.Control.Feedback type="invalid">
+            Email is required!
+          </Form.Control.Feedback>
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Label htmlFor="password">Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Your password"
+            name="password"
+            onChange={handleInputChange}
+            value={userFormData.password}
+            required
+          />
+          <Form.Control.Feedback type="invalid">
+            Password is required!
+          </Form.Control.Feedback>
+        </Form.Group>
+        <Button
+          disabled={!(userFormData.email && userFormData.password)}
+          type="submit"
+          variant="success"
+        >
+          Submit
         </Button>
-      </Paper>
-    </Grid>
+      </Form>
+    </>
   );
 };
 

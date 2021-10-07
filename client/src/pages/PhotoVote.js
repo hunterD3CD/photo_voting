@@ -8,12 +8,14 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 
-// import { Box, Rating, Typography } from "@mui/material";
+import {Typography } from "@mui/material";
 
 const PhotoVote = () => {
   const { loading, data } = useQuery(QUERY_PHOTOS);
   const photos = data?.photos || [];
   console.log("photodata:", photos[1]);
+  
+  
 
   // if data isn't here yet, say so
   if (loading) {
@@ -24,11 +26,11 @@ const PhotoVote = () => {
     <>
       <ImageList
         cols={4}
-        gap={5}
+        gap={8}
         xs={{ width: 500, height: 500 }}
         lg={{ width: 2000, height: 500 }}
       >
-        {itemData.map((item) => (
+        {itemData.map((item,index) => (
           <ImageListItem key={item.img}>
             <img
               src={`${item.img}?w=248&fit=crop&auto=format`}
@@ -42,14 +44,11 @@ const PhotoVote = () => {
               position="below"
             />
             {/* ----------------------------------- RATING COMPONENT----------------------------------------------- */}
-            <RatingPhoto likes={photos[1].likes} dislikes={photos[1].dislikes} />
-          <div>#: users </div>
+            <RatingPhoto likes={photos[index].likes} dislikes={photos[index].dislikes} />
+            <Typography >Vote by: {photos[index].username} </Typography>
           </ImageListItem>
         ))}
 
-        {photos.map((photo) => {
-          return <div>{photo.likes}</div>;
-        })}
       </ImageList>
     </>
   );

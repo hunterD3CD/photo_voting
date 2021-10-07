@@ -1,26 +1,54 @@
-import React from "react";
-// ----------------------------------------------------MUI------------------------------------------------------
-import { Box, Typography} from "@mui/material";
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import Rating from '@mui/material/Rating';
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
+import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
+import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied';
 
+const customIcons = {
+  1: {
+    icon: <SentimentVeryDissatisfiedIcon />,
+    label: 'Very Dissatisfied',
+  },
+  2: {
+    icon: <SentimentDissatisfiedIcon />,
+    label: 'Dissatisfied',
+  },
+  3: {
+    icon: <SentimentSatisfiedIcon />,
+    label: 'Neutral',
+  },
+  4: {
+    icon: <SentimentSatisfiedAltIcon />,
+    label: 'Satisfied',
+  },
+  5: {
+    icon: <SentimentVerySatisfiedIcon />,
+    label: 'Very Satisfied',
+  },
+};
 
-import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
-import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
+function IconContainer(props) {
+  const { value, ...other } = props;
+  return <span {...other}>{customIcons[value].icon}</span>;
+}
 
+IconContainer.propTypes = {
+  value: PropTypes.number.isRequired,
+};
 
 const RatingPhoto = (props) => {
+  
   // ---------------------------------------------------JSX---------------------------------------------------------
   return (
-    <Box
-      sx={{
-        '& > legend': { mt: 2 },
-      }}
-    >
-      <Typography component="legend">Vote photo</Typography>
-      <ThumbUpOffAltIcon />
-      {props.likes}
-      <ThumbDownAltIcon />
-      {props.dislikes}
-    </Box>
+    <Rating
+      name="highlight-selected-only"
+      defaultValue={2}
+      IconContainerComponent={IconContainer}
+      highlightSelectedOnly
+    />
   );
 };
 
