@@ -5,6 +5,9 @@ const {
 } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 
+const aws = require("aws-sdk");
+const s3bucket = process.env.S3_bucket;
+
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
@@ -32,16 +35,44 @@ const resolvers = {
         .populate("friends")
         .populate("photos");
     },
-    photos: async (parent, { username }) => {
+    getAllUserOwnedPhotos: async (parent, { username }) => {
       const params = username ? { username } : {};
       return Photo.find(params).sort({ createdAt: -1 });
     },
-    photo: async (parent, { _id }) => {
+    getOnePhoto: async (parent, { _id }) => {
       return Photo.findOne({ _id });
     },
+    getAllPhotos: async () => {
+      return Photo.find();
+    },
+    getAllPhotosOfUser: async (parent, username) => {},
   },
 
   Mutation: {
+    signS3: async (parent, { filename, filetype }) => {
+      process.env.AWS_ACCESS_KEY_ID;
+      process.env.AWS_SECRET_KEY;
+      const s3 = new aws.S3({
+        signatureVersion: "v4",
+        region: process.env.AWS_REGION,
+      });
+
+      const s3Params = {
+        Bucket: s3Bucket,
+        Key: filename,
+        Expires: 60,
+        ContentType: filetype,
+        ACL: "public-read",
+      };
+      const signedRequest = await s3.getSignedUrl("putObject", s3Params);
+      const url = `https://${s3Bucket}.s3.amazonaws.com/${filename}`;
+
+      return {
+        signedRequest,
+        url,
+      };
+    },
+
     addUser: async (parent, args) => {
       const user = await User.create(args);
       const token = signToken(user);

@@ -1,6 +1,11 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
+  type S3Payload {
+    signedRequest: String!
+    url: String!
+  }
+
   type User {
     _id: ID
     username: String
@@ -13,8 +18,11 @@ const typeDefs = gql`
 
   type Photo {
     _id: ID
-    createdAt: String
+    name: String!
+    pictureUrl: String!
     username: String
+    createdAt: String
+    users: [User]
     voteCount: Int
     votes: [Vote]
   }
@@ -34,14 +42,17 @@ const typeDefs = gql`
     me: User
     users: [User]
     user(username: String!): User
-    photos(username: String): [Photo]
-    photo(_id: ID!): Photo
+    getAllPhotos: [Photo]
+    getAllPhotosOfUser(users: ID!): [Photo]
+    getAllUserOwnedPhotos(username: String): [Photo]
+    getOnePhoto(_id: ID!): Photo
   }
 
   type Mutation {
+    signS3(filename: String!, filetype: String!): S3Payload!
     login(email: String!, password: String!): Auth
+    addPhoto(name: String!, pictureUrl: String!): Photo
     addUser(username: String!, email: String!, password: String!): Auth
-    addPhoto(photoId: ID!): Photo
     votePhoto(photoId: ID!, voteValue: Boolean!): Photo
     countVote(photoId: ID!): Photo
     addFriend(friendId: ID!): User

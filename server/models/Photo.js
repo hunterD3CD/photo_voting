@@ -4,12 +4,9 @@ const dateFormat = require("../utils/dateFormat");
 
 const photoSchema = new Schema(
   {
-    /*photoText: {
-      type: String,
-      required: "photo description",
-      minlength: 1,
-      maxlength: 300,
-    },*/
+    name: { String },
+
+    pictureUrl: { String },
 
     username: {
       type: String,
@@ -21,6 +18,13 @@ const photoSchema = new Schema(
       default: Date.now,
       get: (timestamp) => dateFormat(timestamp),
     },
+
+    users: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
 
     votes: [voteSchema],
   },
