@@ -124,22 +124,6 @@ const resolvers = {
       }
     },
 
-    countVote: async (parent, { photoId }) => {
-      const photo = await Photo.findById(photoId);
-      let likes = 0,
-        dislikes = 0;
-      photo.votes.forEach((vote) => {
-        if (votes.voteValue === true) {
-          likes = likes + 1;
-          //likes += 1;
-          //likes ++;
-        } else {
-          dislikes++;
-        }
-      });
-      return { likes, dislikes };
-    },
-
     addFriend: async (parent, { friendId }, context) => {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
@@ -152,6 +136,27 @@ const resolvers = {
       }
 
       throw new AuthenticationError("You need to be logged in!");
+    },
+  },
+  Photo: {
+    dislikes: async (parent) => {
+      let dislikes = 0;
+      parent.votes.forEach((vote) => {
+      
+        if (!vote.voteValue) {
+          dislikes++;
+        }
+      });
+      return dislikes;
+    },
+    likes: async (parent) => {
+      let likes = 0;
+      parent.votes.forEach((vote) => {
+        if (vote.voteValue) {
+          likes++;
+        }
+      });
+      return likes;
     },
   },
 };

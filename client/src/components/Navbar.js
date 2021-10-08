@@ -2,6 +2,7 @@ import * as React from "react";
 // import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignUpForm from "./SignupForm";
 import LoginForm from "./LoginForm";
+import Auth from "../utils/auth";
 // import PhotoVote from "../pages/PhotoVote"
 
 // ----------------------------------------------------MUI------------------------------------------------------
@@ -53,9 +54,15 @@ const ButtonAppBar = (props) => {
             {/* ////////////////////////////////////////////////////////////////////////////////////////////////// */}
             {/* if user is logged in show logout, if not show login/signup */}
             <ExitToAppIcon />
+            {!Auth.loggedIn() ? (
+              <>
             <Button onClick={handleOpen} color="inherit">
               Login/Sign Up
             </Button>
+            </>
+            ) : (
+              <Button onClick={() => Auth.logout()}>logout</Button>
+            )}
           </Toolbar>
         </AppBar>
       </Box>

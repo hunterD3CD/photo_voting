@@ -9,9 +9,9 @@ import { CardActionArea, Grid, Link } from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
 // import images
-import team1 from "../assets/img/bg3.jpg";
-import team2 from "../assets/img/bg4.jpg";
-import team3 from "../assets/img/bg7.jpg";
+import team1 from "../assets/img/chao.jpg";
+import team2 from "../assets/img/angela.jpg";
+import team3 from "../assets/img/janelu.jpg";
 
 export default function TeamSection() {
   return (
@@ -30,10 +30,12 @@ export default function TeamSection() {
               Chao Deng
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
+              Hey, I'm Chao but people can call me Hunter. I worked in Seattle
+              for 2 years. I don't have much time for hobbies these days. But in
+              the future, I'd like to try pottery. And I start enjoying write
+              the code and want to know more about it!
             </Typography>
-            <Link href="https://github.com/hunterD3CD?tab=repositories">
+            <Link href="https://github.com/hunterD3CD">
               <GitHubIcon />{" "}
             </Link>
           </CardContent>
@@ -48,10 +50,12 @@ export default function TeamSection() {
               Angela Julian
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
+              Angela is an SF bay native and has worked as a QA engineer at
+              companies such as Amazon and Businesswire. She is has two sisters
+              who get to choose the photos their family sends to family and
+              friends. Her eyes have been closed in every photo card sent out.
             </Typography>
-            <Link href="https://github.com/hunterD3CD?tab=repositories">
+            <Link href="https://github.com/angelajulian">
               <GitHubIcon />{" "}
             </Link>
           </CardContent>
@@ -66,10 +70,13 @@ export default function TeamSection() {
               Jane Lu
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
+              Her reason to create this app is not only to help people vote on
+              the photos they like, and forever “destroy” the photos they wish
+              to bury. Secretly she wants to take this opportunity to see who
+              selects “like” on to the photos only him/herself looks awesome and
+              others don’t. Like a friendship test. sneaky eh!
             </Typography>
-            <Link href="https://github.com/hunterD3CD?tab=repositories">
+            <Link href="https://github.com/JYL-LU">
               <GitHubIcon />{" "}
             </Link>
           </CardContent>

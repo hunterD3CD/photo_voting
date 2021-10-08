@@ -1,49 +1,56 @@
 import React from "react";
 import RatingPhoto from "../components/RatingPhoto";
+import { useQuery } from "@apollo/react-hooks";
+import { QUERY_PHOTOS } from "../utils/queries";
 // ----------------------------------------------------MUI------------------------------------------------------
 // import { Grid} from "@mui/material";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 
-// import { Box, Rating, Typography } from "@mui/material";
-
-// const inlineStyle = {
-//   color: "#fff",
-//   left: "60%",
-//   top: "10%",
-//   position: "relative",
-//   padding: "20px",
-//   transform: "translate(-50%, -50%)",
-// };
+import {Typography } from "@mui/material";
 
 const PhotoVote = () => {
+  const { loading, data } = useQuery(QUERY_PHOTOS);
+  const photos = data?.photos || [];
+  console.log("photodata:", photos[1]);
+  
+  
+
+  // if data isn't here yet, say so
+  if (loading) {
+    return <h2>LOADING...</h2>;
+  }
   // ---------------------------------------------------JSX---------------------------------------------------------
   return (
-    <ImageList
-      cols={4}
-      gap={5}
-      xs={{ width: 500, height: 500 }}
-      lg={{ width: 2000, height: 500 }}
-    >
-      {itemData.map((item) => (
-        <ImageListItem key={item.img}>
-          <img
-            src={`${item.img}?w=248&fit=crop&auto=format`}
-            srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-            alt={item.title}
-            loading="lazy"
-          />
-          <ImageListItemBar
-            title={item.title}
-            subtitle={<span>by: {item.author}</span>}
-            position="below"
-          />
-          {/* ----------------------------------- RATING COMPONENT----------------------------------------------- */}
-          <RatingPhoto />
-        </ImageListItem>
-      ))}
-    </ImageList>
+    <>
+      <ImageList
+        cols={4}
+        gap={8}
+        xs={{ width: 500, height: 500 }}
+        lg={{ width: 2000, height: 500 }}
+      >
+        {itemData.map((item,index) => (
+          <ImageListItem key={item.img}>
+            <img
+              src={`${item.img}?w=248&fit=crop&auto=format`}
+              srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+              alt={item.title}
+              loading="lazy"
+            />
+            <ImageListItemBar
+              title={item.title}
+              subtitle={<span>Vote by: {item.author}</span>}
+              position="below"
+            />
+            {/* ----------------------------------- RATING COMPONENT----------------------------------------------- */}
+            <RatingPhoto/>
+            {/* <Typography variant="body2" color="text.secondary">Vote by: {photos[index].username} </Typography> */}
+          </ImageListItem>
+        ))}
+
+      </ImageList>
+    </>
   );
 };
 
