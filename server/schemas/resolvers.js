@@ -100,6 +100,8 @@ const resolvers = {
       if (context.user) {
         const photo = await Photo.create({
           ...args,
+          filename: context.filename,
+          photoUrl: contect.photoUrl,
           username: context.user.username,
         });
 

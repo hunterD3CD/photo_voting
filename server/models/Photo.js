@@ -4,9 +4,15 @@ const dateFormat = require("../utils/dateFormat");
 
 const photoSchema = new Schema(
   {
-    name: { String },
+    filename: {
+      type: String,
+      require: true,
+    },
 
-    pictureUrl: { String },
+    pictureUrl: {
+      type: String,
+      require: true,
+    },
 
     username: {
       type: String,

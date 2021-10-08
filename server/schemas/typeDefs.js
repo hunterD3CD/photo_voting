@@ -18,7 +18,7 @@ const typeDefs = gql`
 
   type Photo {
     _id: ID
-    name: String!
+    filename: String!
     pictureUrl: String!
     username: String
     createdAt: String
@@ -51,7 +51,7 @@ const typeDefs = gql`
   type Mutation {
     signS3(filename: String!, filetype: String!): S3Payload!
     login(email: String!, password: String!): Auth
-    addPhoto(name: String!, pictureUrl: String!): Photo
+    addPhoto(filename: String!, pictureUrl: String!): Photo
     addUser(username: String!, email: String!, password: String!): Auth
     votePhoto(photoId: ID!, voteValue: Boolean!): Photo
     countVote(photoId: ID!): Photo
