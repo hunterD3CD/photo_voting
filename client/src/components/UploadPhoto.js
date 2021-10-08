@@ -1,12 +1,13 @@
-import React from "react";
-import Dropzone from "react-dropzone";
+import React, { useCallback, useState } from "react";
+import PropTypes from 'prop-types';
+import { useDropzone } from "react-dropzone";
 
 // ----------------------------------------------------MUI------------------------------------------------------
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import UploadRoundedIcon from "@mui/icons-material/UploadRounded";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 
-class UploadPhoto extends React.Component {
+const UploadPhoto = (props) => {
   state = {
     users: [],
     file: null,
@@ -52,14 +53,13 @@ class UploadPhoto extends React.Component {
         justifyContent="center"
         alignItems="center"
       >
-        <Dropzone>
-          <p>
-            Try dropping some files here, or click to select files to upload.
-          </p>
-        </Dropzone>
-        <Typography xs={12} style={{ margin: "20px" }}>
-          Click here to upload a photo!
-        </Typography>
+        <GridItem xs={12} {...getRootProps()} style={{ margin: "20px" }}>
+          <input {...getInputProps()} />
+          <Typography style={{ margin: "20px" }}>
+            Click here to upload a photo!
+          </Typography>
+        </GridItem>
+
         <Grid item xs={9}>
           <TextField
             required

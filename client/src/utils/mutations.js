@@ -40,10 +40,9 @@ export const ADD_PHOTO = gql`
 export const VOTE_PHOTO = gql`
   mutation votePhoto($photoId: String!) {
     votePhoto(photoId: $photoId) {
-        voteValue: Boolean
-      }
+      voteValue: Boolean
     }
-  
+  }
 `;
 
 export const COUNT_PHOTO = gql`
