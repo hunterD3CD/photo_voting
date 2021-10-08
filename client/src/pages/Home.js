@@ -3,9 +3,7 @@ import { Parallax } from "react-parallax";
 import UploadPhoto from "../components/UploadPhoto";
 import TeamSection from "../components/TeamSection";
 // ----------------------------------------------------MUI------------------------------------------------------
-// import { makeStyles } from '@material-ui/core';
-import { Grid} from "@mui/material";
-// import images
+import { Grid } from "@mui/material";
 import coverImage from "../assets/img/landing-bg.jpg";
 import contactImage from "../assets/img/bg.jpg";
 
@@ -27,14 +25,15 @@ const Home = () => {
         <Grid container>
           <Grid item xs={12} sm={12} md={6}>
             <div style={{ height: 700 }}>
-              <h1 style={inlineStyle}>Vote your favorite photo and share!</h1>
+              <h1 style={inlineStyle}>
+                Vote on photos with friends and share!
+              </h1>
               <UploadPhoto />
               <br />
             </div>
           </Grid>
         </Grid>
       </Parallax>
-      <h1>| | |</h1>
 
       {/* -----------------------------------------------PART 2 Contact------------------------------------------- */}
       <Parallax
@@ -56,13 +55,12 @@ const Home = () => {
         )}
       >
         <div style={{ height: 700, margin: "50px" }}>
-          <h1 style={inlineStyle}>Here is our team</h1>
+          <h1 style={inlineStyle}>Our team</h1>
           <br />
           <br />
           <TeamSection />
         </div>
       </Parallax>
-      <h1>| | |</h1>
     </>
   );
 };

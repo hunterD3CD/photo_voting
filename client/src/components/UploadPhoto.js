@@ -1,15 +1,70 @@
-import React from "react";
-import Dropzone from "react-dropzone";
+import React, { useState } from "react";
+import { DropzoneArea } from "material-ui-dropzone";
+import { useMutation } from "@apollo/react-hooks";
+import axios from "axios";
+
+import { S3_SIGN } from "../utils/mutations";
 
 // ----------------------------------------------------MUI------------------------------------------------------
-import { Button, Grid, TextField, Typography } from "@mui/material";
-import UploadRoundedIcon from "@mui/icons-material/UploadRounded";
-import SendRoundedIcon from "@mui/icons-material/SendRounded";
+import { Button, TextField } from "@mui/material";
 
 const UploadPhoto = () => {
+  const [tag, setTag] = useState([]);
+  const [file, setFile] = useState(null);
+
+  const [s3Sign, { error }] = useMutation(S3_SIGN);
+
+  const handlePhotoUpload = async (files) => {
+    setFile(files[0]);
+  };
+
+  const handleTextChange = (e) => {
+    setTag(e.target.value);
+  };
+
+  const uploadToS3 = async (file, signedRequest) => {
+    const options = {
+      headers: {
+        "Content-Type": file.type,
+      },
+    };
+    await axios.put(signedRequest, file, options);
+  };
+
+  const formatFilename = (filename) => {
+    const randomString = Math.random().toString(36).substring(2, 7);
+    const cleanFileName = filename.toLowerCase().replace(/[^a-z0-9]/g, "-");
+    const newFilename = `images/${randomString}-${cleanFileName}`;
+    return newFilename.substring(0, 60);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("submit");
+    console.log(tag, file);
+    // const { tag, file } = state;
+    let filename = formatFilename(file.name);
+    const response = await s3Sign({
+      variables: {
+        filename: filename,
+        filetype: file.type,
+      },
+    });
+
+    const { signedRequest, url } = s3Sign;
+    await uploadToS3(file, signedRequest);
+  };
+
+  // const files = acceptedFiles.map((file) => (
+  //   <li key={file.path}>
+  //     {file.path} - {file.size} bytes
+  //   </li>
+  // ));
+  // importFile({ variables: { file: file![0] } });
+
+  // ---------------------------------------------------styles---------------------------------------------------------
   const paperStyle = {
-    padding: 0,
-    height: "40vh",
+    padding: "25px 25px",
     width: "70%",
     margin: 100,
     background: "white",
@@ -25,64 +80,39 @@ const UploadPhoto = () => {
     color: "white",
     height: 48,
     padding: "0 30px",
+    width: "100%",
   };
 
   // ---------------------------------------------------JSX---------------------------------------------------------
   return (
-    <Grid
-      container
-      spacing={2}
-      style={paperStyle}
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Typography xs={12} style={{ margin: "20px" }}>
-        Hey! Wecomle to our website. Upload your nice photo below and share with
-        your friends.
-      </Typography>
-      <Grid item xs={2}>
-        <UploadRoundedIcon fontSize="large" />
-      </Grid>
-      <Grid item xs={9}>
-        <Dropzone onDrop={(files) => console.log(files)}>
-          {({ getRootProps, getInputProps }) => (
-            <div className="container">
-              <div
-                {...getRootProps({
-                  className: "dropzone",
-                  onDrop: (event) => event.stopPropagation(),
-                })}
-              >
-                <input {...getInputProps()} />
-                <p>Drag 'n' drop some files here, or click to select files</p>
-              </div>
-            </div>
-          )}
-        </Dropzone>
-        <Button
-          style={buttonStyle}
-          type="submit"
-          color="primary"
-          variant="contained"
-          fullWidth
-        >
-          Upload
-        </Button>
-      </Grid>
-      <Grid item xs={2}>
-        <SendRoundedIcon fontSize="large" />
-      </Grid>
-      <Grid item xs={9}>
+    <div style={paperStyle} spacing={2}>
+      <form onSubmit={handleSubmit}>
+        <DropzoneArea
+          acceptedFiles={["image/png", "image/jpeg", "image/bmp"]}
+          filesLimit={1}
+          clearOnUnmount
+          dropzoneText={`Upload your photo!`}
+          justifyText={"center"}
+          onChange={handlePhotoUpload}
+        />
         <TextField
           required
           fullWidth
           id="Tag"
-          label="Tag your friends here"
+          label="Tag friends in this photo!"
           variant="outlined"
+          onChange={handleTextChange}
         />
-      </Grid>
-      <br />
-    </Grid>
+        <Button
+          type="submit"
+          variant="contained"
+          style={buttonStyle}
+          // disabled={file?.length ? false : true}
+        >
+          Upload
+        </Button>
+      </form>
+    </div>
   );
 };
 

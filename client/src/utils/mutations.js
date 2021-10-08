@@ -40,10 +40,9 @@ export const ADD_PHOTO = gql`
 export const VOTE_PHOTO = gql`
   mutation votePhoto($photoId: String!) {
     votePhoto(photoId: $photoId) {
-        voteValue: Boolean
-      }
+      voteValue: Boolean
     }
-  
+  }
 `;
 
 export const COUNT_PHOTO = gql`
@@ -54,6 +53,15 @@ export const COUNT_PHOTO = gql`
         createdAt: String
         username: String
       }
+    }
+  }
+`;
+
+export const S3_SIGN = gql`
+  mutation ($filename: String!, $filetype: String!) {
+    signS3(filename: $filename, filetype: $filetype) {
+      url
+      signedRequest
     }
   }
 `;
