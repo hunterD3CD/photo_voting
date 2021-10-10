@@ -11,7 +11,7 @@ import contactImage from "../assets/img/bg.jpg";
 
 const inlineStyle = {
   color: "#fff",
-  left: "60%",
+  left: "50%",
   top: "10%",
   position: "relative",
   padding: "20px",
@@ -26,11 +26,11 @@ const Home = () => {
       <Parallax bgImage={coverImage} strength={500}>
         <Grid container>
           <Grid item xs={12} sm={12} md={6}>
-            <div style={{ height: 700 }}>
+            <Grid item xs={12} style={{ height: 700 }}>
               <h1 style={inlineStyle}>Vote your favorite photo and share!</h1>
               <UploadPhoto />
               <br />
-            </div>
+            </Grid>
           </Grid>
         </Grid>
       </Parallax>
@@ -55,8 +55,9 @@ const Home = () => {
           ></div>
         )}
       >
-        <div style={{ height: 700, margin: "50px" }}>
+        <div style={{ height: 1500, margin: "50px" }}>
           <h1 style={inlineStyle}>Here is our team</h1>
+          <br />
           <br />
           <br />
           <TeamSection />

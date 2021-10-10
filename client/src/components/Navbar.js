@@ -42,26 +42,23 @@ const ButtonAppBar = (props) => {
             >
               <ThumbsUpDownIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, display:{xs:'none', sm:'block'} }}>
               Photo Voting
             </Typography>
             {/* /////////////////////////////////////////////////////////////// */}
-            <HomeIcon />
-            <Button color="inherit" href="/">Home</Button>
-           
-            <VerticalSplitIcon />
-            <Button color="inherit" href="/photo">View Photo</Button>
+            <Button color="inherit" href="/" startIcon={<HomeIcon sx={{ display:{xs:'none', sm:'block'} }}/>} sx={{ flexGrow: 2, fontSize:{xs:10, sm:15} }} >Home</Button>
+            <Button color="inherit" href="/photo" startIcon={<VerticalSplitIcon sx={{ display:{xs:'none', sm:'block'} }}/>} sx={{ flexGrow: 1, fontSize:{xs:10, sm:15} }}>View Photo</Button>
             {/* ////////////////////////////////////////////////////////////////////////////////////////////////// */}
             {/* if user is logged in show logout, if not show login/signup */}
-            <ExitToAppIcon />
+            
             {!Auth.loggedIn() ? (
               <>
-            <Button onClick={handleOpen} color="inherit">
+            <Button onClick={handleOpen} color="inherit" startIcon={<ExitToAppIcon sx={{ display:{xs:'none', sm:'block'} }}/>} sx={{ flexGrow: 1, fontSize:{xs:10, sm:15} }}>
               Login/Sign Up
             </Button>
             </>
             ) : (
-              <Button onClick={() => Auth.logout()}>logout</Button>
+              <Button onClick={() => Auth.logout()} sx={{ flexGrow: 1, fontSize:{xs:10, sm:15} }}>logout</Button>
             )}
           </Toolbar>
         </AppBar>
