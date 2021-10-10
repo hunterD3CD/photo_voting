@@ -1,5 +1,5 @@
 {
-  "homepage": "https://hunterd3cd.github.io/photo_voting/",
+  
   "name": "photo-voting",
   "version": "1.0.0",
   "description": "",
@@ -10,9 +10,8 @@
     "install": "cd server && npm i && cd ../client && npm i",
     "build": "cd client && npm run build",
     "seed": "node seeders/seeds.js",
-    "watch": "nodemon server.js",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "watch": "nodemon server.js"
+    
   },
   "keywords": [],
   "author": "",
@@ -22,7 +21,6 @@
     "if-env": "^1.0.4"
   },
   "devDependencies": {
-    "concurrently": "^5.1.0",
-    "gh-pages": "^3.2.3"
+    "concurrently": "^5.1.0"
   }
 }
