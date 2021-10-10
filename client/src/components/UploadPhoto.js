@@ -4,6 +4,11 @@ import React from "react";
 import { Button, Grid, TextField,Typography } from "@mui/material";
 import UploadRoundedIcon from "@mui/icons-material/UploadRounded";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
+import { styled } from '@mui/material/styles';
+
+const Input = styled('input')({
+  display: 'none',
+});
 
 const UploadPhoto = () => {
   const paperStyle = {
@@ -34,9 +39,12 @@ const UploadPhoto = () => {
         <UploadRoundedIcon fontSize="large"/>
       </Grid>
       <Grid item xs={9}>
-        <Button style={buttonStyle} type="submit" color="primary" variant="contained" fullWidth>
+      <label htmlFor="contained-button-file">
+      <Input accept="image/*" id="contained-button-file" multiple type="file" />
+        <Button style={buttonStyle} type="submit" color="primary" variant="contained" fullWidth component="span">
           Upload
         </Button>
+        </label>
       </Grid>
       <Grid item xs={2}>
         <SendRoundedIcon fontSize="large" />
